@@ -1,0 +1,5 @@
+---
+- name: depoly apache with roles
+  hosts: node1
+  roles: 
+    - apache_web

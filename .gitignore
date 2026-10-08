@@ -1,0 +1,6 @@
+*.json
+*.log
+*.retry
+*.txt
+.vault_pass
+04_templates_and_vault/vault_key.txt

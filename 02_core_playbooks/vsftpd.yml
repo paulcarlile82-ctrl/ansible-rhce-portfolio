@@ -1,0 +1,15 @@
+---
+- name: deploy vsftpd
+  hosts: node2
+  tasks:
+    - name: install vsftpd
+      ansible.builtin.dnf:
+        name: vsftpd
+        state: present
+
+    - name: start and enable vsftpd
+      ansible.builtin.systemd:
+        name: vsftpd
+        state: started
+        enabled: true
+

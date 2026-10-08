@@ -1,0 +1,38 @@
+---
+- name: audit web
+  hosts: all
+  tasks:
+    - name: user and groupadd
+      ansible.builtin.user:
+        name: "{{ item.name }}"  
+        group: "{{ item.group }}"
+        state: present
+      loop:
+        - name: devops_admin
+          group: wheel
+        - name: security_auditor
+          group: vagrant
+
+    - name: install nginx
+      ansible.builtin.dnf:
+        name: nginx
+        state: present
+      when: ansible_facts ['devices']['sda'] is defined or ansible_facts ['devices']['vda'] is defined
+
+    - name: check firewall
+      ansible.builtin.command: systemctl is-active firewalld
+      changed_when: false
+
+    - name: file
+      ansible.builtin.copy:
+        dest: /etc/motd
+        content: "Property of Infrastructure Team - Authorized Personnel Only\n"
+        mode: '0644'
+      notify: restart firewalld
+
+  handlers:
+    - name: restart firewalld
+      ansible.builtin.systemd_service:
+        name: firewalld
+        state: restarted 
+

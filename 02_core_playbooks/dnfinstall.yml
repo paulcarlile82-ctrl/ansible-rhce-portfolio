@@ -1,0 +1,12 @@
+---
+- name: dnfinstall
+  hosts: all
+  gather_facts: false
+
+  tasks:
+    - name: install
+      ansible.builtin.dnf:
+        name: 
+          - podman
+          - words
+        state: present  

@@ -1,0 +1,21 @@
+---
+- name: deploy local facts to hosts
+  hosts: node1 node2
+  tasks:
+    - name: custom facts directory
+      ansible.builtin.file:
+        path: /etc/ansible/facts.d
+        state: directory
+        owner: root
+        group: root
+        mode: '0755'
+
+    - name: deploy fact file
+      ansible.builtin.copy:
+        dest: /etc/ansible/facts.d/local.fact
+        content: |
+          [facts]
+          type=production
+        owner: root
+        group: root
+        mode: '0644'

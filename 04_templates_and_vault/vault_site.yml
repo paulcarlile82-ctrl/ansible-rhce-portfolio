@@ -1,0 +1,15 @@
+---
+- name: deploy secret passwd
+  hosts: node1
+  vars_files:
+    - vars/vault.yml
+
+  tasks:
+    - name: datebase password
+      ansible.builtin.copy:
+        content: "{{ secret_db_pass }}\n"
+        dest: /tmp/db_pass.txt
+        owner: root
+        group: root
+        mode: '0600'
+

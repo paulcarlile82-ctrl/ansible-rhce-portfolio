@@ -1,0 +1,20 @@
+--- 
+- name: loop user
+  hosts: node1
+  vars:
+    user_list:
+      - name: anna
+        groups: wheel
+      - name: linda
+        groups: vagrant
+
+  tasks:
+    - name: target user 
+      ansible.builtin.user:
+        name: "{{ item.name }}"
+        groups: "{{ item.groups }}"
+        state: present
+        append: true
+      loop: "{{ user_list }}"  
+    
+

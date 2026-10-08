@@ -1,0 +1,8 @@
+---
+- name: set hosts on servers
+  hosts: all
+  tasks:
+    - name: set hosts names
+      ansible.builtin.hostname:
+        name: "{{ inventory_hostname }}"
+

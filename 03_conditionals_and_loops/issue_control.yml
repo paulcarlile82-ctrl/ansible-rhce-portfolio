@@ -1,0 +1,40 @@
+---
+- name: control
+  hosts: all
+  tasks:
+    - name: add users
+      ansible.builtin.user:
+        name: "{{ item.username }}"
+        group: "{{ item.group }}"
+        state: present
+      loop:
+        - username: sysadmin_dev
+          group: wheel
+        - username: audit_user
+          group: vagrant
+
+    - name: install httpd
+      ansible.builtin.dnf:
+        name: httpd
+        state: present
+      when: ansible_facts ['device']['sda'] is defined or ansible_facts ['device']['vda'] is defined
+
+    - name: inspect ssh
+      ansible.builtin.command: systemctl is-active sshd
+      changed_when: false
+
+    - name: update logs
+      ansible.builtin.copy:
+        content: "Authorized Access Only - All activity is monitored.\n"
+        dest: /etc/issue
+        mode: '0644'
+      notify: restart sshd
+
+  handlers:
+    - name: restart sshd
+      ansible.builtin.systemd_service:
+        name: sshd
+        state: restarted
+
+    
+
