@@ -6,7 +6,7 @@ Welcome to my Red Hat Certified Engineer (EX294) study and automation portfolio.
 
 ## Live Terminal Demonstration
 
-[![asciicast](https://asciinema.org/a/aBCxRlGjuBWJkHNg.svg)](https://asciinema.org/a/aBCxRlGjuBWJkHNg)
+![Terminal Demo](demo.gif)
 
 *Automated execution of the `apache_web` role against `node1`, demonstrating task execution followed by an immediate second run verifying zero state drift (`changed=0`).*
 
