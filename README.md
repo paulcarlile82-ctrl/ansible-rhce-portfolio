@@ -6,9 +6,9 @@ Welcome to my Red Hat Certified Engineer (EX294) study and automation portfolio.
 
 ## Live Terminal Demonstration
 
-[![asciicast](https://asciinema.org/a/439ed80f-ee4a-438c-8729-bb67397ea8ff.svg)](https://asciinema.org/a/439ed80f-ee4a-438c-8729-bb67397ea8ff)
+[![asciicast](https://asciinema.org/a/aBCxRlGjuBWJkHNg.svg)](https://asciinema.org/a/aBCxRlGjuBWJkHNg)
 
-*Automated execution of the `apache_web` role against `node1`, demonstrating tasks execution followed by an immediate second run verifying zero state drift (`changed=0`).*
+*Automated execution of the `apache_web` role against `node1`, demonstrating task execution followed by an immediate second run verifying zero state drift (`changed=0`).*
 
 ---
 
@@ -86,3 +86,15 @@ ansible-rhce-portfolio/
 └── roles/                         # Production-ready custom role abstractions
     ├── deploy_apache.yml          # Role execution entry point
     └── apache_web/                # Custom Apache web server role
+Verification & Idempotency Testing
+Every playbook in this repository is verified for syntax correctness and idempotency (ensuring a second execution results in changed=0):
+
+Bash
+# 1. Syntax Verification
+ansible-playbook --syntax-check 02_core_playbooks/dnfinstall.yml
+
+# 2. First Run (Applies Changes)
+ansible-playbook roles/deploy_apache.yml
+
+# 3. Idempotency Check (Verifies No Drift)
+ansible-playbook roles/deploy_apache.yml
